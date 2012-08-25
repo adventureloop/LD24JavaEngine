@@ -12,4 +12,5 @@ public enum ButtonState
 {
     BUTTON_DOWN,
     BUTTON_UP,
+    BUTTON_CLICKED,
 }

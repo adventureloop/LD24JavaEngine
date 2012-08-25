@@ -94,11 +94,13 @@ public class Sprite {
         // bind to the appropriate texture for this sprite
         texture.bind();
         
-        
+          
         
         // translate to the right location and prepare to draw
         glTranslatef(x, y, 0);
-        glScalef(scale,scale,1.0f);
+
+        
+        glScalef(scale,scale,scale);
         
         // draw a quad textured to match the sprite        
         glBegin(GL_QUADS);

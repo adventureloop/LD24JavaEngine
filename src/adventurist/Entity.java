@@ -122,6 +122,7 @@ public abstract class Entity {
     
       public void clicked()
     {
+        this.state = ButtonState.BUTTON_CLICKED;
         parent.clicked(name);
     }
 }

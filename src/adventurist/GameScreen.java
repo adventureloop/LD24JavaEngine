@@ -27,7 +27,7 @@ public class GameScreen extends Screen
     
     public void mouseEvent(int button,boolean state,int x, int y)
     {
-    
+        solar.mouseEvent(button, state, x, y);
     }
     
     public void keyEvent(int key,boolean state)

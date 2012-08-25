@@ -24,6 +24,8 @@ public class MainMenu extends Screen
         menuItems = new ArrayList<ButtonEntity>();
         menuItems.add(new ButtonEntity("playMenuItem",this,textureLoader,soundManager,150,50,512,128,1.0f));
         menuItems.add(new ButtonEntity("exitMenuItem",this,textureLoader,soundManager,150,350,512,128,1.0f));
+        
+        this.state = ScreenState.SCREEN_RUNNING;
     }
     
     public void updateWithDelta(long delta) 
