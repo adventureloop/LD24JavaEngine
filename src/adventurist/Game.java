@@ -25,8 +25,8 @@ public class Game
     /**
      * The dimensions of the game display area
      */
-    private int width = 800;
-    private int height = 600;
+    private int width = 1024;
+    private int height = 640;
     /**
      * Variables for managing fps recording and game loop execution
      */
@@ -146,7 +146,7 @@ public class Game
             glLoadIdentity();
             glPushMatrix();
             
-            glClearColor(0.0f,0.0f,0.0f,0.0f);
+            glClearColor(0.0f,0.0f,0.1f,1.0f);
             
             glViewport(0, 0, width, height);
 

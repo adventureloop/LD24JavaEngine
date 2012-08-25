@@ -134,7 +134,7 @@ public class TextureLoader {
                          GL_TEXTURE_2D, // target
                          GL_RGBA,     // dst pixel format
                          GL_LINEAR, // min filter (unused)
-                         GL_LINEAR);
+                         GL_NEAREST);
 
         table.put(resourceName,tex);
 

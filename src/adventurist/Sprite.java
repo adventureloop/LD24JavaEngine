@@ -87,18 +87,18 @@ public class Sprite {
      * @param x The x location at which to draw this sprite
      * @param y The y location at which to draw this sprite
      */
-    public void draw(int x, int y) {
+    public void draw(int x, int y,float scale) {
         // store the current model matrix
         glPushMatrix();
 
         // bind to the appropriate texture for this sprite
         texture.bind();
         
-        glScalef(1.0f,1.0f,1.0f);
-        glRotatef(0,0,0,1);
+        
         
         // translate to the right location and prepare to draw
         glTranslatef(x, y, 0);
+        glScalef(scale,scale,1.0f);
         
         // draw a quad textured to match the sprite        
         glBegin(GL_QUADS);
@@ -119,5 +119,10 @@ public class Sprite {
 
         // restore the model view matrix to prevent contamination
         glPopMatrix();
+    }
+    
+    public void draw(int x, int y) 
+    {
+        this.draw(x,y,1.0f);
     }
 }
