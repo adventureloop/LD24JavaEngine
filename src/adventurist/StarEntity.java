@@ -30,18 +30,22 @@ public class StarEntity extends Entity
         clicked = new Sprite(textureLoader,"Clicked.png");
         
         type = StarType.DWARF_STAR;
+        
     }
 
     public void updateWithDelta(long delta) {
-        //ani.updateWithDelta(delta);
+        this.age += delta;
+        //Also animate
     }
     
-    public double temperatureValueForEntity(int x,int y)
+    public double temperatureValueForEntity(PlanetEntity p)
     {
+        int x = p.getX();
+        int y = p.getY();
         int heatValue;
         
-        double dist = Math.sqrt(Math.pow((double)this.x - (double)x,2) + Math.pow((double)this.y - (double)y,2));
-        if(type == StarType.SUPERNOVA_STAR) {
+        double dist = Math.sqrt(Math.pow((double)this.x - (double)x,2) + Math.pow((double)this.y - (double)y,2))/10;
+       /* if(type == StarType.SUPERNOVA_STAR) {
             double ageValue = Math.pow(age/1000,3) + (4 * Math.pow(age/1000, 2)) + (3 * (age/1000)) + 0.6;
             double distValue = (2 * Math.pow(4, -dist+4));
             return baseTemp * ageValue * distValue;
@@ -49,9 +53,9 @@ public class StarEntity extends Entity
             double ageValue = -Math.pow(age/1000,3) + (Math.pow(age/1000, 2)) + (3 * (age/1000));
             double distValue = (2 * Math.pow(4, -dist+4));
             return baseTemp * ageValue * distValue;
-        }
+        }*/
         
-        return 0;
+        return 100 - dist;              
     }
 
     public void render() 

@@ -124,5 +124,22 @@ public abstract class Entity {
     {
         this.state = ButtonState.BUTTON_CLICKED;
         parent.clicked(name);
+        
+        System.out.println(this.toString());
+    }
+      
+    public String toString()
+    {
+        return "Implement please...";
+    }
+    
+    public int getX()
+    {
+        return x;        
+    }
+    
+    public int getY()
+    {
+        return y;        
     }
 }

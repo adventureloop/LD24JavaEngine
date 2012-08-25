@@ -93,9 +93,6 @@ public class Sprite {
 
         // bind to the appropriate texture for this sprite
         texture.bind();
-        
-          
-        
         // translate to the right location and prepare to draw
         glTranslatef(x, y, 0);
 
@@ -126,5 +123,39 @@ public class Sprite {
     public void draw(int x, int y) 
     {
         this.draw(x,y,1.0f);
+    }
+    
+    public void draw(int x,int y,float xst,float xen,float yst,float yen,float scale) {
+                // store the current model matrix
+        glPushMatrix();
+
+        // bind to the appropriate texture for this sprite
+        texture.bind();
+        // translate to the right location and prepare to draw
+        glTranslatef(x, y, 0);
+
+        
+        glScalef(scale,scale,scale);
+        
+        // draw a quad textured to match the sprite        
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2f(xst, yst);
+            glVertex2f(0, 0);
+
+            glTexCoord2f(xst, yen);
+            glVertex2f(0, height);
+
+            glTexCoord2f(xen, yen);
+            glVertex2f(width, height);
+
+            glTexCoord2f(xen, yst);
+            glVertex2f(width, 0);
+        }
+        glEnd();
+
+        // restore the model view matrix to prevent contamination
+        glPopMatrix();
+    
     }
 }
