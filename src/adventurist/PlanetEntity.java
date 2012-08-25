@@ -7,6 +7,20 @@ package adventurist;
 public class PlanetEntity extends Entity 
 {
     Sprite clicked;
+    PlanetType type;
+    
+    double nitrogen;
+    double oxygen;
+    double co2;
+    
+    double water;
+    
+    long lifePop;
+    long intLifePop;
+    
+    int volcanoes;
+    
+    double heat;
 
     public PlanetEntity(String name, Screen parent, TextureLoader textureLoader,
             SoundManager soundManager, int x, int y, int width, int height, float scale) {
