@@ -7,13 +7,12 @@ package adventurist;
 
 public class ButtonEntity extends Entity
 {
-    ButtonState state;
     private int SOUND_CLICK;
     
     
-    public ButtonEntity(String name,Screen parent,TextureLoader textureLoader,SoundManager soundManager,int x, int y,int width,int height) 
+    public ButtonEntity(String name,Screen parent,TextureLoader textureLoader,SoundManager soundManager,int x, int y,int width,int height,float scale) 
     {
-       super(name,parent,textureLoader,soundManager,x,y,width,height);
+       super(name,parent,textureLoader,soundManager,x,y,width,height,scale);
        
        this.ani.addFrame(new Sprite(textureLoader,name + ".png"),0);
        this.ani.addFrame(new Sprite(textureLoader,name + "1.png"),0);
@@ -24,33 +23,10 @@ public class ButtonEntity extends Entity
        state = ButtonState.BUTTON_UP;
     }
     
-    public void mouseDown()
-    {
-        state = ButtonState.BUTTON_DOWN;
-    }
-    
-    public void mouseUp()
-    {
-        if(state == ButtonState.BUTTON_DOWN) {
-            this.clicked();
-            state = ButtonState.BUTTON_UP;
-        }
-    }
-    
-    public ButtonState getState()
-    {
-        return state;
-    }
-    
-    public void clearClick()
-    {
-        state = ButtonState.BUTTON_UP;
-    }
-    
     public void clicked()
     {
         sm.playSound(SOUND_CLICK);
-        parent.clicked(name);
+        super.clicked();
     }
     
     public void render()

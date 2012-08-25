@@ -4,12 +4,14 @@
  */
 package adventurist;
 
-public class Entity {
+public abstract class Entity {
 
     Animation ani;
     String name;
     SoundManager sm;
     Screen parent;
+    
+    ButtonState state;
     
     int x;
     int y;
@@ -25,8 +27,9 @@ public class Entity {
     
     int width;
     int height;
+    float scale;
     
-    public Entity(String name,Screen parent, TextureLoader textureLoader, SoundManager soundManager, int x, int y, int width, int height) {
+    public Entity(String name,Screen parent, TextureLoader textureLoader, SoundManager soundManager, int x, int y, int width, int height,float scale) {
         this.name = name;
         this.sm = soundManager;
         this.parent = parent;
@@ -42,6 +45,7 @@ public class Entity {
         this.maxSpeed = 20;
         
         this.moving = false;
+        this.scale = scale;
     }
 
     public boolean collidesWithEntity(Entity e) {
@@ -90,6 +94,34 @@ public class Entity {
     }
 
     public void render() {
-        this.ani.frameToRender().draw(this.x, this.y);
+        this.ani.frameToRender().draw(this.x, this.y,this.scale);
+    }
+    
+        public void mouseDown()
+    {
+        state = ButtonState.BUTTON_DOWN;
+    }
+    
+    public void mouseUp()
+    {
+        if(state == ButtonState.BUTTON_DOWN) {
+            this.clicked();
+            state = ButtonState.BUTTON_UP;
+        }
+    }
+    
+    public ButtonState getState()
+    {
+        return state;
+    }
+    
+    public void clearClick()
+    {
+        state = ButtonState.BUTTON_UP;
+    }
+    
+      public void clicked()
+    {
+        parent.clicked(name);
     }
 }
