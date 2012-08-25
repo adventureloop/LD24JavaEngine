@@ -68,7 +68,7 @@ public class Font
             if(fc == null)
                 continue;
             
-            spriteSheet.draw(x + (i * 30),y,fc.getXStart(),fc.getXEnd(),fc.getYStart(),fc.getYEnd(),1.0f);
+            spriteSheet.draw(x + (i * 30),y,fc.getXStart(),fc.getXEnd(),fc.getYStart(),fc.getYEnd(),(float )size);
         }
     }
 }

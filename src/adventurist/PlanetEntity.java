@@ -189,17 +189,17 @@ public class PlanetEntity extends Entity
 
     public void render() {
         //super.render();       
-        this.ani.frameToRender().draw(this.x, this.y, this.scale);
+        this.ani.frameToRender().draw(this.x, this.y, this.scale,0.0f);
         
         if(state == ButtonState.BUTTON_DOWN) {
-            clicked.draw(this.x, this.y, this.scale);
+            clicked.draw(this.x, this.y, this.scale,0.0f);
             this.renderDetail();
         }
     }
     
     public void renderDetail()
     {
-        this.ani.frameToRender().draw(0, 320, this.scale * 1.5f);
+        this.ani.frameToRender().draw(0, 320, this.scale * 1.5f,0.0f);
     }
     
     @Override

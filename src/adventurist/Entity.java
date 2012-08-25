@@ -94,7 +94,7 @@ public abstract class Entity {
     }
 
     public void render() {
-        this.ani.frameToRender().draw(this.x, this.y,this.scale);
+        this.ani.frameToRender().draw(this.x, this.y,this.scale,0.0f);
     }
     
         public void mouseDown()

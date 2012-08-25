@@ -24,8 +24,8 @@ public class GameScreen extends Screen
     
     public void render()
     {
-        //solar.render(); 
-        font.drawTextAt(0, 0, 0.5f,"hello world");
+        solar.render(); 
+        //font.drawTextAt(0, 0, 0.5f,"ABCDEFGHIJKLMNOPQRSTUVWXZY");
     }
     
     public void mouseEvent(int button,boolean state,int x, int y)

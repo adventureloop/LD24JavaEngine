@@ -37,8 +37,7 @@ public class SolarSystemScreen extends Screen {
         meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));
         meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));
         
-        planets.get(1).hitWithMeteor(meteors.get(0));
-        
+        planets.get(1).hitWithMeteor(meteors.get(0));                
     }
 
     public void updateWithDelta(long delta) 

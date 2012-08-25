@@ -87,12 +87,15 @@ public class Sprite {
      * @param x The x location at which to draw this sprite
      * @param y The y location at which to draw this sprite
      */
-    public void draw(int x, int y,float scale) {
+    public void draw(int x, int y,float scale,float rotation) {
         // store the current model matrix
         glPushMatrix();
 
         // bind to the appropriate texture for this sprite
         texture.bind();
+        
+        glRotatef(rotation,0.0f,0.0f,1.0f);
+        
         // translate to the right location and prepare to draw
         glTranslatef(x, y, 0);
 
@@ -122,8 +125,8 @@ public class Sprite {
     
     public void draw(int x, int y) 
     {
-        this.draw(x,y,1.0f);
-    }
+        this.draw(x,y,1.0f,0.0f);
+    }       
     
     public void draw(int x,int y,float xst,float xen,float yst,float yen,float scale) {
                 // store the current model matrix
