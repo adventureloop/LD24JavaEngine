@@ -18,4 +18,5 @@ public enum PlanetStage
     MEDIEVAL,
     INDUSTRIAL,
     FUTURISTIC,
+    PLANET_FINISHED,
 }

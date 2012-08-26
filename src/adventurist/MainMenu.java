@@ -14,7 +14,6 @@ public class MainMenu extends Screen
     List<ButtonEntity> menuItems;
     StarFieldEntity stars;
     
-    
     GameScreen game;
     
     public MainMenu(TextureLoader textureLoader,SoundManager soundManager,Game game)
@@ -24,9 +23,11 @@ public class MainMenu extends Screen
         this.game = new GameScreen(textureLoader,soundManager);
         
         menuItems = new ArrayList<ButtonEntity>();
-        menuItems.add(new ButtonEntity("playMenuItem",this,textureLoader,soundManager,150,50,512,128,1.0f));
-        menuItems.add(new ButtonEntity("playMenuTutorialItem",this,textureLoader,soundManager,150,175,512,128,1.0f));
-        menuItems.add(new ButtonEntity("exitMenuItem",this,textureLoader,soundManager,150,350,512,128,1.0f));
+        menuItems.add(new ButtonEntity("playMenuItem",this,textureLoader,soundManager,250,300,512,128,1.0f));
+        menuItems.add(new ButtonEntity("playMenuTutorialItem",this,textureLoader,soundManager,250,400,512,128,1.0f));
+        menuItems.add(new ButtonEntity("exitMenuItem",this,textureLoader,soundManager,250,500,512,128,1.0f));
+        
+        menuItems.add(new ButtonEntity("mainTitleItem",this,textureLoader,soundManager,285,0,592,336,0.75f));
         
         stars = new StarFieldEntity(this,textureLoader,soundManager);
         
@@ -41,7 +42,12 @@ public class MainMenu extends Screen
                 this.game = null;
                 this.game = new GameScreen(textureLoader,soundManager);
                 return;
+            } else if(game.getState() == ScreenState.SCREEN_COMPLETED) {
+                this.game = null;
+                this.game = new GameScreen(textureLoader,soundManager);
+                return;
             }
+                
             game.updateWithDelta(delta);
         } else {
             for(ButtonEntity e : menuItems)

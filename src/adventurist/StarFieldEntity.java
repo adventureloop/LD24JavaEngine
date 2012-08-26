@@ -11,7 +11,7 @@ public class StarFieldEntity extends Entity
     
     public StarFieldEntity(Screen parent, TextureLoader textureLoader,
             SoundManager soundManager) {
-        super("starField", parent, textureLoader, soundManager, 0, 0, 512, 512, 2.0f);   
+        super("StarField", parent, textureLoader, soundManager, 0, 0, 512, 512, 2.0f);   
         
         this.x = (int)-50;
         this.y = (int)-50;

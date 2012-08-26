@@ -13,4 +13,5 @@ public enum ScreenState
     SCREEN_RUNNING,
     SCREEN_FINISHED,
     SCREEN_BACKGROUND,
+    SCREEN_COMPLETED,
 }

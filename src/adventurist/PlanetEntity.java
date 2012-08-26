@@ -30,6 +30,7 @@ public class PlanetEntity extends Entity {
     long intLifePop;
     
     long age;
+    double progress;
     
     int volcanoes;
     double heat;
@@ -87,26 +88,27 @@ public class PlanetEntity extends Entity {
 
                 oxygen += delta;
 
+                progress = age / 20000;
                 if (water > 0.65 && age > 20000) {
-                    stage = PlanetStage.AQUATIC;
+                    stage = PlanetStage.AQUATIC;                    
                 }
                 break;
             case AQUATIC:
                 if (co2Per > 0.045) {
                     stage = PlanetStage.BACTERIAL;
                 }
-
+                progress = age / 45000;
                 if ((heat > 35) && age > 45000) {
                     stage = PlanetStage.REPTILIAN;
                 }
                 break;
             case REPTILIAN:
                 if (co2Per > 0.044 || heat < 30 || water < 0.55) {
-                    stage = PlanetStage.AQUATIC;
+                    stage = PlanetStage.BACTERIAL;
                 }
                 co2 += delta;
                 oxygen += delta;
-
+                progress = age / 60000;
                 if (age > 60000) {
                     stage = PlanetStage.MAMMALIAN;
                 }
@@ -118,7 +120,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.2;
                 oxygen += delta;
                 nitrogen -= delta * 0.1;
-
+                progress = age / 80000;
                 if (age > 80000) {
                     stage = PlanetStage.CAVEMAN;
                 }
@@ -130,7 +132,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.2;
                 oxygen += delta;
                 nitrogen -= delta * 0.1;
-
+                progress = age / 100000;
                 if (age > 100000) {
                     stage = PlanetStage.NOMADIC;
                 }
@@ -142,7 +144,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.5;
                 oxygen += delta;
                 nitrogen -= delta * 0.15;
-
+                progress = age / 120000;
                 if (age > 120000) {
                     stage = PlanetStage.SETTLED;
                 }
@@ -154,7 +156,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.5;
                 oxygen += delta;
                 nitrogen -= delta * 0.15;
-
+                progress = age / 140000;
                 if (age > 140000) {
                     stage = PlanetStage.MAMMALIAN;
                 }
@@ -166,7 +168,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.5;
                 oxygen += delta;
                 nitrogen -= delta * 0.15;
-
+                progress = age / 160000;
                 if (age > 160000) {
                     stage = PlanetStage.MEDIEVAL;
                 }
@@ -178,7 +180,7 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.5;
                 oxygen += delta;
                 nitrogen -= delta * 0.15;
-
+                progress = age / 180000;
                 if (age > 180000) {
                     stage = PlanetStage.INDUSTRIAL;
                 }
@@ -190,7 +192,10 @@ public class PlanetEntity extends Entity {
                 co2 += delta * 1.5;
                 oxygen += delta;
                 nitrogen -= delta * 0.15;
-
+                progress = age / 200000;
+                
+                if(age > 200000)
+                    ;   //Game WON!!!!
                 break;
         }
 
@@ -228,22 +233,28 @@ public class PlanetEntity extends Entity {
 
         if (viewState == ViewState.VOLCANO_VIEW) {//Draw volcanos on the planet
             viewContent = new Sprite(this.textureLoader, "volcano.png");
+            progress = volcanoes/5.0;
         } else if (viewState == ViewState.LIFE_VIEW) {
             viewContent = this.spriteForStage();
         } else if (viewState == ViewState.NORMAL_VIEW) {
             return;
-        }
+        }                
         viewContent.draw(225, 505);
-        viewContent.draw(200, 390);
-        viewContent.draw(95, 430);
-        viewContent.draw(80, 530);
-        viewContent.draw(120, 540);
+        
+       if(progress > 0.2) 
+            viewContent.draw(200, 390);
+        if(progress > 0.4)
+            viewContent.draw(95, 430);
+        if(progress > 0.6)
+            viewContent.draw(80, 530);
+        if(progress > 0.8)
+            viewContent.draw(120, 540);
     }
 
     public Sprite spriteForStage() {
         switch (stage) {
             case DEAD:
-                return new Sprite(this.textureLoader, "exit.png");
+                return new Sprite(this.textureLoader, "Dead.png");
             case BACTERIAL:
                 return new Sprite(this.textureLoader, "bacterial.png");
             case AQUATIC:
@@ -349,5 +360,30 @@ public class PlanetEntity extends Entity {
     public void setViewState(ViewState state)
     {
         viewState = state;
+    }
+    
+    public PlanetStage getStage()
+    {
+        return stage;
+    }
+    
+    public double getO2Level()
+    {
+        return this.oxygenPer;
+    }
+    
+    public double getCO2Level()
+    {
+        return this.co2Per;
+    }
+        
+    public double getN2Level()
+    {
+        return this.nitrogenPer;
+    }
+    
+    public double getTemp()
+    {
+        return this.heat;
     }
 }

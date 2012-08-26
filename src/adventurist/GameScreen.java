@@ -8,6 +8,7 @@ package adventurist;
 public class GameScreen extends Screen
 {
     SolarSystemScreen solar;
+    FinishedScreen finished;
     Font font;
     
     public GameScreen(TextureLoader textureLoader, SoundManager soundManager)
@@ -15,19 +16,29 @@ public class GameScreen extends Screen
         super(textureLoader,soundManager);
         solar = new SolarSystemScreen(textureLoader,soundManager);
         font = new Font(textureLoader);
+        finished = new FinishedScreen(textureLoader,soundManager);
     }
 
     public void updateWithDelta(long delta) 
     {
-        if(solar.getState() == ScreenState.SCREEN_FINISHED)
+        if(solar.getState() == ScreenState.SCREEN_FINISHED) {
             this.state = ScreenState.SCREEN_FINISHED;
-        else
-            solar.updateWithDelta(delta);       
+        }else if (finished.getState() == ScreenState.SCREEN_FINISHED) {
+            this.state = ScreenState.SCREEN_FINISHED;
+        }else if(solar.getState() == ScreenState.SCREEN_COMPLETED) {  
+            this.state = ScreenState.SCREEN_COMPLETED;
+        }else {
+            solar.updateWithDelta(delta);
+        }       
     }
     
     public void render()
     {
-        solar.render(); 
+        if(solar.getState() == ScreenState.SCREEN_RUNNING) {
+            solar.render(); 
+        }else if(solar.getState() == ScreenState.SCREEN_COMPLETED) {
+            finished.render();
+        }
         //font.drawTextAt(0, 0, 0.5f,"ABCDEFGHIJKLMNOPQRSTUVWXZY");
     }
     

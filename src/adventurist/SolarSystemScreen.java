@@ -21,6 +21,11 @@ public class SolarSystemScreen extends Screen {
     ButtonEntity normalViewButton;
     ButtonEntity volcanoViewButton;
     
+    ProgressEntity co2Bar;
+    ProgressEntity o2Bar;
+    ProgressEntity n2Bar;
+    ProgressEntity tempBar;
+    
     ArrayList<PlanetEntity> planets;
     ArrayList<CometEntity> comets;
     ArrayList<MeteorEntity> meteors;
@@ -43,6 +48,20 @@ public class SolarSystemScreen extends Screen {
         normalViewButton = new ButtonEntity("normalViewButton",this,textureLoader,soundManager,0,610,32,32,1.0f);
         lifeViewButton = new ButtonEntity("lifeViewButton",this,textureLoader,soundManager,32,610,32,32,1.0f);
         volcanoViewButton = new ButtonEntity("volcanoViewButton",this,textureLoader,soundManager,64,610,32,32,1.0f);
+        
+        o2Bar = new ProgressEntity("O2Level",this,textureLoader,soundManager,300,450,96,32,1.0f);
+        n2Bar = new ProgressEntity("N2Level",this,textureLoader,soundManager,300,480,96,32,1.0f);
+        co2Bar = new ProgressEntity("CO2Level",this,textureLoader,soundManager,300,510,96,32,1.0f);
+        
+        tempBar = new ProgressEntity("tempLevel",this,textureLoader,soundManager,300,540,96,32,1.0f);
+        
+
+        co2Bar.setLevel(0.75);
+        o2Bar.setLevel(0.25);
+        n2Bar.setLevel(0.6);
+        tempBar.setLevel(150);
+        
+        this.state = ScreenState.SCREEN_RUNNING;
     }
 
     public void updateWithDelta(long delta) 
@@ -50,6 +69,9 @@ public class SolarSystemScreen extends Screen {
         star.updateWithDelta(delta);      
 
         for (PlanetEntity p : planets) {
+            if(p.getStage() == PlanetStage.PLANET_FINISHED) {
+                this.state = ScreenState.SCREEN_COMPLETED;
+            }
             p.updateHeat(star.temperatureValueForEntity(p));            
             p.updateWithDelta(delta);
         }
@@ -103,8 +125,6 @@ public class SolarSystemScreen extends Screen {
         } else {
             solarflareButton.updateWithDelta(delta);    
         }
-            
-        
     }
 
     public void render() 
@@ -127,6 +147,18 @@ public class SolarSystemScreen extends Screen {
             lifeViewButton.render();        
             normalViewButton.render();
             volcanoViewButton.render();
+            
+            co2Bar.updateProgress( ((PlanetEntity)selectedEntity).getCO2Level());
+            o2Bar.updateProgress( ((PlanetEntity)selectedEntity).getO2Level());
+            n2Bar.updateProgress( ((PlanetEntity)selectedEntity).getN2Level());
+            
+            tempBar.updateProgress( ((PlanetEntity)selectedEntity).getTemp());
+            
+            co2Bar.render();
+            o2Bar.render();
+            n2Bar.render();
+            
+            tempBar.render();
         }
         
         if(flare != null) {

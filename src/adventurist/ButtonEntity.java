@@ -32,9 +32,9 @@ public class ButtonEntity extends Entity
     public void render()
     {
         if(state == ButtonState.BUTTON_UP)
-            this.ani.frameForIndex(0).draw(this.x, this.y);
+            this.ani.frameForIndex(0).draw(this.x, this.y,this.scale,0.0f);
         else 
-            this.ani.frameForIndex(1).draw(this.x, this.y);
+            this.ani.frameForIndex(1).draw(this.x, this.y,this.scale,0.0f);
     }
     
     public String toString()
