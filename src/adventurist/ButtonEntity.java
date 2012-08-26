@@ -36,4 +36,9 @@ public class ButtonEntity extends Entity
         else 
             this.ani.frameForIndex(1).draw(this.x, this.y);
     }
+    
+    public String toString()
+    {
+        return name;
+    }
 }

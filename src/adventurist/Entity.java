@@ -143,7 +143,7 @@ public abstract class Entity {
       
     public String toString()
     {
-        return "Implement please...";
+        return "Implement to string please...";
     }
     
     public int getX()

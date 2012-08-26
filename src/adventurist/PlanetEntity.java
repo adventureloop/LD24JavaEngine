@@ -182,7 +182,7 @@ public class PlanetEntity extends Entity
         this.calcPercentages();
         
         heat = heat * (co2Per / 0.00399);
-        heat += externalHeat;
+        heat += externalHeat + volcanoes;
     }
     
     public void hitWithMeteor(MeteorEntity m)

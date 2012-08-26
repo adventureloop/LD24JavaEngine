@@ -29,7 +29,7 @@ public class SolarSystemScreen extends Screen {
         meteors = new ArrayList<MeteorEntity>();   
         
         exitButton = new ButtonEntity("exitButton",this,textureLoader,soundManager,950,600,64,32,1.0f);
-        volcanoButton = new ButtonEntity("vocanoButton",this,textureLoader,soundManager,700,600,128,32,1.0f);
+        volcanoButton = new ButtonEntity("volcanoButton",this,textureLoader,soundManager,700,600,128,32,1.0f);
     }
 
     public void updateWithDelta(long delta) 
