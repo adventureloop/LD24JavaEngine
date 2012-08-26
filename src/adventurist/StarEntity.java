@@ -70,6 +70,6 @@ public class StarEntity extends Entity
     
     public void renderDetail()
     {
-        this.ani.frameToRender().draw(0, 320, this.scale * 1.5f,0.0f);
+        this.ani.frameToRender().draw(0, 320,2.5f,0.0f);
     }
 }

@@ -13,9 +13,6 @@ public class MeteorEntity extends Entity
     double oxygen;
     
     double life;
-    
-    float rotation;
-    
 
     public MeteorEntity(String name, Screen parent, TextureLoader textureLoader,
             SoundManager soundManager) {
@@ -35,6 +32,9 @@ public class MeteorEntity extends Entity
         this.rotation = r.nextInt(90);
         
         this.ani.addFrame(new Sprite(textureLoader,name + ".png"),0);
+        
+        this.setSpeed(0.1);
+        this.startMoving();
     }
     
     public double getWater()
@@ -63,7 +63,7 @@ public class MeteorEntity extends Entity
     }
     
     public void updateWithDelta(long delta) {
-        //ani.updateWithDelta(delta);
+        super.updateWithDelta(delta);
     }
 
     public void render() {      

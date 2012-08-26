@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class MainMenu extends Screen 
 {
     List<ButtonEntity> menuItems;
+    StarFieldEntity stars;
+    
     
     GameScreen game;
     
@@ -23,7 +25,10 @@ public class MainMenu extends Screen
         
         menuItems = new ArrayList<ButtonEntity>();
         menuItems.add(new ButtonEntity("playMenuItem",this,textureLoader,soundManager,150,50,512,128,1.0f));
+        menuItems.add(new ButtonEntity("playMenuTutorialItem",this,textureLoader,soundManager,150,175,512,128,1.0f));
         menuItems.add(new ButtonEntity("exitMenuItem",this,textureLoader,soundManager,150,350,512,128,1.0f));
+        
+        stars = new StarFieldEntity(this,textureLoader,soundManager);
         
         this.state = ScreenState.SCREEN_RUNNING;
     }
@@ -32,18 +37,22 @@ public class MainMenu extends Screen
     {
         if(state == ScreenState.SCREEN_BACKGROUND)
             game.updateWithDelta(delta);
-        else
+        else {
             for(ButtonEntity e : menuItems)
                 e.updateWithDelta(delta);
+            stars.updateWithDelta(delta);
+        }
     }
     
     public void render()
     {
         if(state == ScreenState.SCREEN_BACKGROUND)
             game.render();
-        else
+        else {
+            stars.render();
             for(ButtonEntity e : menuItems)
-                e.render();
+                e.render();            
+        }
     }
     
     public void mouseEvent(int button,boolean state,int x, int y)
@@ -79,7 +88,14 @@ public class MainMenu extends Screen
         if(name.equals("exitMenuItem"))
             state = ScreenState.SCREEN_FINISHED;
         
-        if(name.contains("playMenuItem"))
+        if(name.contains("playMenuItem")) {
             state = ScreenState.SCREEN_BACKGROUND;
+            game.clicked(name);
+        }
+        
+        if(name.equals("playMenuTutorialItem")) {
+            state = ScreenState.SCREEN_BACKGROUND;
+            game.clicked(name);            
+        }
     }
 }

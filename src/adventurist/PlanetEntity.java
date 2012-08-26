@@ -7,8 +7,16 @@ package adventurist;
 public class PlanetEntity extends Entity 
 {
     Sprite clicked;
+    
     PlanetType type;
     PlanetStage stage;
+    ViewState viewState;
+    
+    ButtonEntity volcanoButton;
+    ButtonEntity normalViewButton;
+    ButtonEntity lifeViewButton;
+    
+    Sprite viewContent;
     
     double nitrogen;
     double oxygen;
@@ -44,6 +52,8 @@ public class PlanetEntity extends Entity
         this.co2 = 0.5;
         this.oxygen = 25.5;
         this.nitrogen = 74;
+        
+        viewState = ViewState.VOLCANO_VIEW;        
     }
 
     public void updateWithDelta(long delta) {
@@ -199,7 +209,25 @@ public class PlanetEntity extends Entity
     
     public void renderDetail()
     {
-        this.ani.frameToRender().draw(0, 320, this.scale * 1.5f,0.0f);
+        this.ani.frameToRender().draw(0, 320, 2.5f,0.0f);
+        
+        if(viewState == ViewState.VOLCANO_VIEW) {//Draw volcanos on the planet
+            viewContent = new Sprite(this.textureLoader,"volcano.png");
+        } else if(viewState == ViewState.LIFE_VIEW) {
+            viewContent = this.spriteForStage();
+        } else if(viewState == ViewState.NORMAL_VIEW) {
+            return;
+        }
+        viewContent.draw(225, 505);          
+        viewContent.draw(200, 390);                                 
+        viewContent.draw(95, 430);
+        viewContent.draw(80, 530);
+        viewContent.draw(120, 540);
+    }
+    
+    public Sprite spriteForStage()
+    {
+        return null;
     }
     
     @Override

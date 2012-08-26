@@ -12,6 +12,7 @@ public abstract class Entity {
     Screen parent;
     
     ButtonState state;
+    TextureLoader textureLoader;
     
     int x;
     int y;
@@ -20,10 +21,10 @@ public abstract class Entity {
     int destY;
     
     boolean moving;
-    int angle;
+    float rotation;
     
-    int maxSpeed;  //Max Speed per second
-    int speed;      //Current Speed;
+    double maxSpeed;  //Max Speed per second
+    double speed;      //Current Speed;
     
     int width;
     int height;
@@ -46,6 +47,8 @@ public abstract class Entity {
         
         this.moving = false;
         this.scale = scale;
+        
+        this.textureLoader = textureLoader;
     }
 
     public boolean collidesWithEntity(Entity e) {
@@ -68,7 +71,7 @@ public abstract class Entity {
         this.destY = y;
     }
     
-    public void setSpeed(int speed)
+    public void setSpeed(double speed)
     {
         if(speed > this.maxSpeed)
             this.speed = this.maxSpeed;
@@ -83,8 +86,8 @@ public abstract class Entity {
     
     public void move(long delta)
     {
-        this.x += (speed * delta) * Math.cos(Math.toRadians(angle));
-        this.y += (speed * delta) * Math.sin(Math.toRadians(angle));
+        this.x += (int)((speed * delta) * Math.cos(Math.toRadians(rotation)));
+        this.y += (int)((speed * delta) * Math.sin(Math.toRadians(rotation)));
     }
 
     public void updateWithDelta(long delta) {

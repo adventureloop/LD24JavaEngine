@@ -38,7 +38,7 @@ public class Animation
     {
         if(this.frames.isEmpty() || state == AnimationStates.ANIMATION_STOPPED)
             return;
-        System.out.println("Animation delta " + delta);
+        
         lastrun += delta;
         
         if(lastrun > this.timings.get(index).intValue()) {
