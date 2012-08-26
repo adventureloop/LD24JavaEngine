@@ -13,12 +13,12 @@ public class MeteorEntity extends Entity
     double oxygen;
     
     double life;
+    
+    Random r = new Random();
 
     public MeteorEntity(String name, Screen parent, TextureLoader textureLoader,
             SoundManager soundManager) {
         super(name, parent, textureLoader, soundManager, 0, 0, 64, 64, 1.0f);
-
-        Random r = new Random();
         
         water = r.nextDouble() % 100 + 20;
         nitrogen = r.nextDouble() % 200 + 10;
@@ -29,7 +29,7 @@ public class MeteorEntity extends Entity
         this.x = r.nextInt(800);
         this.y = r.nextInt(320);
         
-        this.rotation = r.nextInt(90);
+        this.rotation = r.nextInt(360);
         
         this.ani.addFrame(new Sprite(textureLoader,name + ".png"),0);
         
@@ -64,6 +64,11 @@ public class MeteorEntity extends Entity
     
     public void updateWithDelta(long delta) {
         super.updateWithDelta(delta);
+        
+        if(this.x < 0 || this.y < 0)
+            this.rotation = 275;
+        if(this.x > 1024 || this.y > 640)
+            this.rotation = 135;
     }
 
     public void render() {      

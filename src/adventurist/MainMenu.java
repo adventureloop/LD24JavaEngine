@@ -35,9 +35,15 @@ public class MainMenu extends Screen
     
     public void updateWithDelta(long delta) 
     {
-        if(state == ScreenState.SCREEN_BACKGROUND)
+        if(state == ScreenState.SCREEN_BACKGROUND) {
+            if(game.getState() == ScreenState.SCREEN_FINISHED) {
+                state = ScreenState.SCREEN_RUNNING;
+                this.game = null;
+                this.game = new GameScreen(textureLoader,soundManager);
+                return;
+            }
             game.updateWithDelta(delta);
-        else {
+        } else {
             for(ButtonEntity e : menuItems)
                 e.updateWithDelta(delta);
             stars.updateWithDelta(delta);

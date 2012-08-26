@@ -12,9 +12,9 @@ public class PlanetEntity extends Entity
     PlanetStage stage;
     ViewState viewState;
     
-    ButtonEntity volcanoButton;
+    ButtonEntity volcanoViewButton;
     ButtonEntity normalViewButton;
-    ButtonEntity lifeViewButton;
+    ButtonEntity lifeViewButton;       
     
     Sprite viewContent;
     
@@ -53,7 +53,7 @@ public class PlanetEntity extends Entity
         this.oxygen = 25.5;
         this.nitrogen = 74;
         
-        viewState = ViewState.VOLCANO_VIEW;        
+        viewState = ViewState.LIFE_VIEW;                        
     }
 
     public void updateWithDelta(long delta) {
@@ -80,14 +80,17 @@ public class PlanetEntity extends Entity
                     stage = PlanetStage.BACTERIAL;
                 break;
             case BACTERIAL:
-                if(co2Per > 0.052 || (heat > 68 || heat < 20))
+                if(co2Per > 0.052 || (heat > 68 || heat < 20)) {
                     stage = PlanetStage.DEAD;
+                    lifePop = 0;
+                    break;
+                }
                 
                 lifePop += delta;
                 
                 oxygen += delta;                                
                 
-                if(water > 0.65 && age > 20000)
+                if(water > 0.65 && age > 20000) 
                     stage = PlanetStage.AQUATIC;
                 break;            
             case AQUATIC:
@@ -227,6 +230,31 @@ public class PlanetEntity extends Entity
     
     public Sprite spriteForStage()
     {
+        switch(stage)
+        {
+            case DEAD:
+                return new Sprite(this.textureLoader,"exit.png");                
+            case BACTERIAL:
+                return new Sprite(this.textureLoader,"bacterial.png");
+            case AQUATIC:
+                return new Sprite(this.textureLoader,"Aquatic.png");
+            case REPTILIAN:
+                return new Sprite(this.textureLoader,"Reptilian.png");
+            case MAMMALIAN:
+                return new Sprite(this.textureLoader,"Mammalian.png");
+            case CAVEMAN:
+                return new Sprite(this.textureLoader,"Cavemen.png");
+            case NOMADIC:
+                return new Sprite(this.textureLoader,"Nomadic.png");
+            case SETTLED:
+                return new Sprite(this.textureLoader,"Setteled.png");
+            case MEDIEVAL:
+                return new Sprite(this.textureLoader,"Medieval.png");
+            case INDUSTRIAL:
+                return new Sprite(this.textureLoader,"Indestrial.png");
+            case FUTURISTIC:
+                return new Sprite(this.textureLoader,"Futuristic.png");
+        }
         return null;
     }
     
@@ -302,5 +330,14 @@ public class PlanetEntity extends Entity
         nitrogenPer = nitrogen / max;
         oxygenPer = oxygen / max;
         co2Per = co2 / max;
+    }
+    
+    public void addVolcano()
+    {
+        if(this.volcanoes+1 > 5) {
+            return;
+        } else {
+            this.volcanoes++;
+        }
     }
 }

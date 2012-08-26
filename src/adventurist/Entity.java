@@ -52,14 +52,24 @@ public abstract class Entity {
     }
 
     public boolean collidesWithEntity(Entity e) {
+        if(this.collidesWithPoint(e.getX(), e.getY()))
+            return true;
+        if(this.collidesWithPoint(e.getX() + e.getWidth(), e.getY()))
+            return true;
+        if(this.collidesWithPoint(e.getX(), e.getY() + e.getHeight()))
+            return true;           
+        if(this.collidesWithPoint(e.getX() + e.getWidth(), e.getY() + e.getHeight()))
+            return true;
+        
         return false;
     }
 
     public boolean collidesWithPoint(int x, int y) {
-        if (x < this.x || x > this.x + width) {
+        
+        if (x < this.x || x > this.x + (width * scale)) {
             return false;
         }
-        if (y < this.y || y > this.y + height) {
+        if (y < this.y || y > this.y + (height * scale)) {
             return false;
         }
         return true;
@@ -144,5 +154,15 @@ public abstract class Entity {
     public int getY()
     {
         return y;        
+    }
+    
+    public int getWidth()
+    {
+        return this.width;        
+    }
+    
+    public int getHeight()
+    {
+        return height;
     }
 }

@@ -19,7 +19,10 @@ public class GameScreen extends Screen
 
     public void updateWithDelta(long delta) 
     {
-        solar.updateWithDelta(delta);       
+        if(solar.getState() == ScreenState.SCREEN_FINISHED)
+            this.state = ScreenState.SCREEN_FINISHED;
+        else
+            solar.updateWithDelta(delta);       
     }
     
     public void render()
@@ -36,5 +39,16 @@ public class GameScreen extends Screen
     public void keyEvent(int key,boolean state)
     {
         
+    }
+    
+    public void clicked(String name)
+    {
+         if(name.contains("playMenuItem")) {            
+            solar.generateSolarSystem(0);
+        }
+        
+        if(name.equals("playMenuTutorialItem")) {
+            solar.tutorialSystem();            
+        }
     }
 }

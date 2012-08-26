@@ -21,7 +21,7 @@ public class Game
     /**
      * The normal title of the window
      */
-    private String WINDOW_TITLE = "(Game not yet named) ";
+    private String WINDOW_TITLE = "adventureloop, LD24: Literally, \"Earth-shaping\"";
     /**
      * The dimensions of the game display area
      */
