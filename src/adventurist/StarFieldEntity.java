@@ -22,20 +22,11 @@ public class StarFieldEntity extends Entity
         this.ani.addFrame(new Sprite(textureLoader,name + "1.png"),500); 
         
         this.ani.startAnimation();
-        this.sign = 1;
+        //this.startMoving();
     }
     
     public void updateWithDelta(long delta) {
         super.updateWithDelta(delta);
-        
-/*        if(this.x > -2 || this.y > -2)
-            sign = -1;
-        if(this.x < -50 || this.y < -50)
-            sign = 1;
-        
-        this.x += (int)((double)sign * (speed * (double)delta));
-        this.y += (int)((double)sign * (speed * (double)delta));
-        System.out.println("Star field updating " + x + " " + y);*/
     }
 
     public void render() {      

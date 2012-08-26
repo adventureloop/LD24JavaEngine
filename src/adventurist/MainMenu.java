@@ -47,7 +47,7 @@ public class MainMenu extends Screen
             for(ButtonEntity e : menuItems)
                 e.updateWithDelta(delta);
             stars.updateWithDelta(delta);
-        }
+        }        
     }
     
     public void render()

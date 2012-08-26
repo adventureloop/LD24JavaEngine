@@ -11,8 +11,15 @@ import java.util.Random;
 public class SolarSystemScreen extends Screen {
 
     StarEntity star;
-    ButtonEntity exitButton;
+    SolarFlareEntity flare;
+    
+    ButtonEntity exitButton;    
+    ButtonEntity solarflareButton;
+    
     ButtonEntity volcanoButton;
+    ButtonEntity lifeViewButton;
+    ButtonEntity normalViewButton;
+    ButtonEntity volcanoViewButton;
     
     ArrayList<PlanetEntity> planets;
     ArrayList<CometEntity> comets;
@@ -28,8 +35,14 @@ public class SolarSystemScreen extends Screen {
         planets = new ArrayList<PlanetEntity>();
         meteors = new ArrayList<MeteorEntity>();   
         
-        exitButton = new ButtonEntity("exitButton",this,textureLoader,soundManager,950,600,64,32,1.0f);
-        volcanoButton = new ButtonEntity("volcanoButton",this,textureLoader,soundManager,700,600,128,32,1.0f);
+        exitButton = new ButtonEntity("exitButton",this,textureLoader,soundManager,950,600,64,32,1.0f);        
+        solarflareButton = new ButtonEntity("solarflareButton",this,textureLoader,soundManager,845,450,176,32,1.0f);
+        
+        volcanoButton = new ButtonEntity("volcanoButton",this,textureLoader,soundManager,100,610,128,32,1.0f);
+                
+        normalViewButton = new ButtonEntity("normalViewButton",this,textureLoader,soundManager,0,610,32,32,1.0f);
+        lifeViewButton = new ButtonEntity("lifeViewButton",this,textureLoader,soundManager,32,610,32,32,1.0f);
+        volcanoViewButton = new ButtonEntity("volcanoViewButton",this,textureLoader,soundManager,64,610,32,32,1.0f);
     }
 
     public void updateWithDelta(long delta) 
@@ -72,9 +85,26 @@ public class SolarSystemScreen extends Screen {
             meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));
             }
         }
-            
+        
+        if(flare != null && flare.getX() < 0) {
+            flare = null;
+        }
         
         exitButton.updateWithDelta(delta);
+        volcanoButton.updateWithDelta(delta);
+       
+        lifeViewButton.updateWithDelta(delta);;
+        normalViewButton.updateWithDelta(delta);;
+        volcanoViewButton.updateWithDelta(delta);;
+        
+        
+        if(flare != null) {
+            flare.updateWithDelta(delta);
+        } else {
+            solarflareButton.updateWithDelta(delta);    
+        }
+            
+        
     }
 
     public void render() 
@@ -93,18 +123,42 @@ public class SolarSystemScreen extends Screen {
         
         if(selectedEntity != null && selectedEntity.getClass().getName().equals("adventurist.PlanetEntity")) {
             volcanoButton.render();
+            
+            lifeViewButton.render();        
+            normalViewButton.render();
+            volcanoViewButton.render();
+        }
+        
+        if(flare != null) {
+            flare.render();
+        }else {
+            solarflareButton.render();
         }
     }
 
     public void mouseEvent(int button, boolean state, int x, int y) 
     {
-        if((selectedEntity != null && selectedEntity.getClass().getName().equals("adventurist.PlanetEntity")) 
-                && volcanoButton.collidesWithPoint(x, y)) {
-            if(state)
-                volcanoButton.mouseDown();
-            else
-                volcanoButton.mouseUp();
-            return;
+        if(selectedEntity != null && selectedEntity.getClass().getName().equals("adventurist.PlanetEntity")){ 
+            ButtonEntity tmpButton = null;
+            if(volcanoButton.collidesWithPoint(x, y)) {
+                tmpButton = volcanoButton;
+            } else if(lifeViewButton.collidesWithPoint(x, y)) {
+                 tmpButton = lifeViewButton;
+            } else if(normalViewButton.collidesWithPoint(x, y)) {
+                 tmpButton = normalViewButton;
+            } else if(volcanoViewButton.collidesWithPoint(x, y)) {
+                 tmpButton = volcanoViewButton;
+            }
+            
+            if(tmpButton != null) {
+                if(state) {
+                        tmpButton.mouseDown();
+                        return;
+                } else {
+                        tmpButton.mouseUp();
+                        return;
+                }
+            }
         }
         
         if(state && selectedEntity != null) {            
@@ -128,10 +182,21 @@ public class SolarSystemScreen extends Screen {
             }          
         }        
         if(exitButton.collidesWithPoint(x, y)) {
-            if(state)
+            if(state) {
                 exitButton.mouseDown();
-            else
-                exitButton.mouseUp();            
+            }
+            else {
+                exitButton.mouseUp();
+            }            
+        }
+        
+        if(flare == null && solarflareButton.collidesWithPoint(x, y)) {
+            if(state) {
+                solarflareButton.mouseDown();
+            }
+            else {
+                solarflareButton.mouseUp();
+            }            
         }
 
     }
@@ -169,7 +234,7 @@ public class SolarSystemScreen extends Screen {
                     planets.add(new PlanetEntity("Planet", this, textureLoader, soundManager, xpos, ypos, 128, 128, size/2));
                     break;
                 case 4:
-                    planets.add(new PlanetEntity("Planet", this, textureLoader, soundManager, xpos, ypos, 128, 128, size/2));
+                    planets.add(new PlanetEntity("DesertPlanet", this, textureLoader, soundManager, xpos, ypos, 128, 128, size/2));
                     break;
             }
             matter -= (1000 * size);
@@ -198,8 +263,7 @@ public class SolarSystemScreen extends Screen {
         meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));
         meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));
         meteors.add(new MeteorEntity("Meteor", this, textureLoader, soundManager));  
-        
-        planets.get(0).hitWithMeteor(new MeteorEntity("Meteor", this, textureLoader, soundManager));
+                
     }
             
     public void clicked(String name)
@@ -208,11 +272,33 @@ public class SolarSystemScreen extends Screen {
             state = ScreenState.SCREEN_FINISHED;
         }
         
-        if(name.equals("volcanoButton")) {
-            if(selectedEntity != null && 
-                    selectedEntity.getClass().getName().equals("adventurist.PlanetEntity")){
+        if(selectedEntity != null && 
+                selectedEntity.getClass().getName().equals("adventurist.PlanetEntity")){
+            if(name.equals("volcanoButton")) {
                 ((PlanetEntity)selectedEntity).addVolcano();
             }            
+            
+            if(name.equals("volcanoViewButton")) {
+                ((PlanetEntity)selectedEntity).setViewState(ViewState.VOLCANO_VIEW);
+            }
+            
+            if(name.equals("normalViewButton")) {
+                ((PlanetEntity)selectedEntity).setViewState(ViewState.NORMAL_VIEW);
+            }
+                        
+            if(name.equals("lifeViewButton")) {
+                ((PlanetEntity)selectedEntity).setViewState(ViewState.LIFE_VIEW);
+            }
+        }
+        
+        if(name.equals("solarflareButton")) {
+            flare = new SolarFlareEntity(this,textureLoader,soundManager);
+            flare.setScale(star.getScale() * 0.8f);
+            
+            flare.setX(star.getX());
+            flare.setY(star.getY());
+            
+            System.out.println("Creating solarflare");
         }
     }
 }

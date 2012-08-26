@@ -65,10 +65,12 @@ public class MeteorEntity extends Entity
     public void updateWithDelta(long delta) {
         super.updateWithDelta(delta);
         
-        if(this.x < 0 || this.y < 0)
+        if(this.x < 0 || this.y < 0) {
             this.rotation = 275;
-        if(this.x > 1024 || this.y > 640)
+        }
+        if(this.x > 1024 || this.y > 640) {
             this.rotation = 135;
+        }
     }
 
     public void render() {      
